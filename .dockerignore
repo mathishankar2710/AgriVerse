@@ -1,0 +1,10 @@
+node_modules
+.git
+.lovable
+.output
+.vinxi
+dist
+AGENTS.md
+Dockerfile
+docker-compose.yml
+README.md
