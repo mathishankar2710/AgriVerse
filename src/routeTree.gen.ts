@@ -10,10 +10,24 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as AuthRouteImport } from './routes/auth'
+import { Route as AdminRouteImport } from './routes/admin'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as IndexRouteImport } from './routes/index'
+
+// Imports of authenticated subroutes
 import { Route as AuthenticatedHistoryRouteImport } from './routes/_authenticated/history'
 import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
+import { Route as AuthenticatedChatbotRouteImport } from './routes/_authenticated/chatbot'
+import { Route as AuthenticatedDiseaseRouteImport } from './routes/_authenticated/disease'
+import { Route as AuthenticatedIotRouteImport } from './routes/_authenticated/iot'
+import { Route as AuthenticatedPricePredictionRouteImport } from './routes/_authenticated/price-prediction'
+import { Route as AuthenticatedProductivityRouteImport } from './routes/_authenticated/productivity'
+import { Route as AuthenticatedProfileRouteImport } from './routes/_authenticated/profile'
+import { Route as AuthenticatedSoilFertilizerRouteImport } from './routes/_authenticated/soil-fertilizer'
+import { Route as AuthenticatedCropManagementRouteImport } from './routes/_authenticated/crop-management'
+import { Route as AuthenticatedMarketplaceRouteImport } from './routes/_authenticated/marketplace'
+import { Route as AuthenticatedServicesRouteImport } from './routes/_authenticated/services'
+import { Route as AuthenticatedWeatherRouteImport } from './routes/_authenticated/weather'
 import { Route as AuthenticatedAgentsAgentTypeRouteImport } from './routes/_authenticated/agents.$agentType'
 
 const AuthRoute = AuthRouteImport.update({
@@ -21,75 +35,108 @@ const AuthRoute = AuthRouteImport.update({
   path: '/auth',
   getParentRoute: () => rootRouteImport,
 } as any)
+
+const AdminRoute = AdminRouteImport.update({
+  id: '/admin',
+  path: '/admin',
+  getParentRoute: () => rootRouteImport,
+} as any)
+
 const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
   id: '/_authenticated',
   getParentRoute: () => rootRouteImport,
 } as any)
+
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+
 const AuthenticatedHistoryRoute = AuthenticatedHistoryRouteImport.update({
   id: '/history',
   path: '/history',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+
 const AuthenticatedDashboardRoute = AuthenticatedDashboardRouteImport.update({
   id: '/dashboard',
   path: '/dashboard',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+
+const AuthenticatedChatbotRoute = AuthenticatedChatbotRouteImport.update({
+  id: '/chatbot',
+  path: '/chatbot',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+
+const AuthenticatedDiseaseRoute = AuthenticatedDiseaseRouteImport.update({
+  id: '/disease',
+  path: '/disease',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+
+const AuthenticatedIotRoute = AuthenticatedIotRouteImport.update({
+  id: '/iot',
+  path: '/iot',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+
+const AuthenticatedPricePredictionRoute = AuthenticatedPricePredictionRouteImport.update({
+  id: '/price-prediction',
+  path: '/price-prediction',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+
+const AuthenticatedProductivityRoute = AuthenticatedProductivityRouteImport.update({
+  id: '/productivity',
+  path: '/productivity',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+
+const AuthenticatedProfileRoute = AuthenticatedProfileRouteImport.update({
+  id: '/profile',
+  path: '/profile',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+
+const AuthenticatedSoilFertilizerRoute = AuthenticatedSoilFertilizerRouteImport.update({
+  id: '/soil-fertilizer',
+  path: '/soil-fertilizer',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+
+const AuthenticatedCropManagementRoute = AuthenticatedCropManagementRouteImport.update({
+  id: '/crop-management',
+  path: '/crop-management',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+
+const AuthenticatedMarketplaceRoute = AuthenticatedMarketplaceRouteImport.update({
+  id: '/marketplace',
+  path: '/marketplace',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+
+const AuthenticatedServicesRoute = AuthenticatedServicesRouteImport.update({
+  id: '/services',
+  path: '/services',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+
+const AuthenticatedWeatherRoute = AuthenticatedWeatherRouteImport.update({
+  id: '/weather',
+  path: '/weather',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+
 const AuthenticatedAgentsAgentTypeRoute =
   AuthenticatedAgentsAgentTypeRouteImport.update({
     id: '/agents/$agentType',
     path: '/agents/$agentType',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
-
-export interface FileRoutesByFullPath {
-  '/': typeof IndexRoute
-  '/auth': typeof AuthRoute
-  '/dashboard': typeof AuthenticatedDashboardRoute
-  '/history': typeof AuthenticatedHistoryRoute
-  '/agents/$agentType': typeof AuthenticatedAgentsAgentTypeRoute
-}
-export interface FileRoutesByTo {
-  '/': typeof IndexRoute
-  '/auth': typeof AuthRoute
-  '/dashboard': typeof AuthenticatedDashboardRoute
-  '/history': typeof AuthenticatedHistoryRoute
-  '/agents/$agentType': typeof AuthenticatedAgentsAgentTypeRoute
-}
-export interface FileRoutesById {
-  __root__: typeof rootRouteImport
-  '/': typeof IndexRoute
-  '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
-  '/auth': typeof AuthRoute
-  '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
-  '/_authenticated/history': typeof AuthenticatedHistoryRoute
-  '/_authenticated/agents/$agentType': typeof AuthenticatedAgentsAgentTypeRoute
-}
-export interface FileRouteTypes {
-  fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/auth' | '/dashboard' | '/history' | '/agents/$agentType'
-  fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/auth' | '/dashboard' | '/history' | '/agents/$agentType'
-  id:
-    | '__root__'
-    | '/'
-    | '/_authenticated'
-    | '/auth'
-    | '/_authenticated/dashboard'
-    | '/_authenticated/history'
-    | '/_authenticated/agents/$agentType'
-  fileRoutesById: FileRoutesById
-}
-export interface RootRouteChildren {
-  IndexRoute: typeof IndexRoute
-  AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
-  AuthRoute: typeof AuthRoute
-}
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
@@ -98,6 +145,13 @@ declare module '@tanstack/react-router' {
       path: '/auth'
       fullPath: '/auth'
       preLoaderRoute: typeof AuthRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin': {
+      id: '/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AdminRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/_authenticated': {
@@ -128,6 +182,83 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedDashboardRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/chatbot': {
+      id: '/_authenticated/chatbot'
+      path: '/chatbot'
+      fullPath: '/chatbot'
+      preLoaderRoute: typeof AuthenticatedChatbotRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/disease': {
+      id: '/_authenticated/disease'
+      path: '/disease'
+      fullPath: '/disease'
+      preLoaderRoute: typeof AuthenticatedDiseaseRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/iot': {
+      id: '/_authenticated/iot'
+      path: '/iot'
+      fullPath: '/iot'
+      preLoaderRoute: typeof AuthenticatedIotRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/price-prediction': {
+      id: '/_authenticated/price-prediction'
+      path: '/price-prediction'
+      fullPath: '/price-prediction'
+      preLoaderRoute: typeof AuthenticatedPricePredictionRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/productivity': {
+      id: '/_authenticated/productivity'
+      path: '/productivity'
+      fullPath: '/productivity'
+      preLoaderRoute: typeof AuthenticatedProductivityRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/profile': {
+      id: '/_authenticated/profile'
+      path: '/profile'
+      fullPath: '/profile'
+      preLoaderRoute: typeof AuthenticatedProfileRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/soil-fertilizer': {
+      id: '/_authenticated/soil-fertilizer'
+      path: '/soil-fertilizer'
+      fullPath: '/soil-fertilizer'
+      preLoaderRoute: typeof AuthenticatedSoilFertilizerRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/crop-management': {
+      id: '/_authenticated/crop-management'
+      path: '/crop-management'
+      fullPath: '/crop-management'
+      preLoaderRoute: typeof AuthenticatedCropManagementRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/marketplace': {
+      id: '/_authenticated/marketplace'
+      path: '/marketplace'
+      fullPath: '/marketplace'
+      preLoaderRoute: typeof AuthenticatedMarketplaceRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/services': {
+      id: '/_authenticated/services'
+      path: '/services'
+      fullPath: '/services'
+      preLoaderRoute: typeof AuthenticatedServicesRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/weather': {
+      id: '/_authenticated/weather'
+      path: '/weather'
+      fullPath: '/weather'
+      preLoaderRoute: typeof AuthenticatedWeatherRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/agents/$agentType': {
       id: '/_authenticated/agents/$agentType'
       path: '/agents/$agentType'
@@ -138,15 +269,168 @@ declare module '@tanstack/react-router' {
   }
 }
 
+export interface FileRoutesByFullPath {
+  '/': typeof IndexRoute
+  '/auth': typeof AuthRoute
+  '/admin': typeof AdminRoute
+  '/dashboard': typeof AuthenticatedDashboardRoute
+  '/chatbot': typeof AuthenticatedChatbotRoute
+  '/disease': typeof AuthenticatedDiseaseRoute
+  '/iot': typeof AuthenticatedIotRoute
+  '/price-prediction': typeof AuthenticatedPricePredictionRoute
+  '/productivity': typeof AuthenticatedProductivityRoute
+  '/profile': typeof AuthenticatedProfileRoute
+  '/soil-fertilizer': typeof AuthenticatedSoilFertilizerRoute
+  '/crop-management': typeof AuthenticatedCropManagementRoute
+  '/marketplace': typeof AuthenticatedMarketplaceRoute
+  '/services': typeof AuthenticatedServicesRoute
+  '/weather': typeof AuthenticatedWeatherRoute
+  '/history': typeof AuthenticatedHistoryRoute
+  '/agents/$agentType': typeof AuthenticatedAgentsAgentTypeRoute
+}
+
+export interface FileRoutesByTo {
+  '/': typeof IndexRoute
+  '/auth': typeof AuthRoute
+  '/admin': typeof AdminRoute
+  '/dashboard': typeof AuthenticatedDashboardRoute
+  '/chatbot': typeof AuthenticatedChatbotRoute
+  '/disease': typeof AuthenticatedDiseaseRoute
+  '/iot': typeof AuthenticatedIotRoute
+  '/price-prediction': typeof AuthenticatedPricePredictionRoute
+  '/productivity': typeof AuthenticatedProductivityRoute
+  '/profile': typeof AuthenticatedProfileRoute
+  '/soil-fertilizer': typeof AuthenticatedSoilFertilizerRoute
+  '/crop-management': typeof AuthenticatedCropManagementRoute
+  '/marketplace': typeof AuthenticatedMarketplaceRoute
+  '/services': typeof AuthenticatedServicesRoute
+  '/weather': typeof AuthenticatedWeatherRoute
+  '/history': typeof AuthenticatedHistoryRoute
+  '/agents/$agentType': typeof AuthenticatedAgentsAgentTypeRoute
+}
+
+export interface FileRoutesById {
+  __root__: typeof rootRouteImport
+  '/': typeof IndexRoute
+  '/auth': typeof AuthRoute
+  '/admin': typeof AdminRoute
+  '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
+  '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
+  '/_authenticated/chatbot': typeof AuthenticatedChatbotRoute
+  '/_authenticated/disease': typeof AuthenticatedDiseaseRoute
+  '/_authenticated/iot': typeof AuthenticatedIotRoute
+  '/_authenticated/price-prediction': typeof AuthenticatedPricePredictionRoute
+  '/_authenticated/productivity': typeof AuthenticatedProductivityRoute
+  '/_authenticated/profile': typeof AuthenticatedProfileRoute
+  '/_authenticated/soil-fertilizer': typeof AuthenticatedSoilFertilizerRoute
+  '/_authenticated/crop-management': typeof AuthenticatedCropManagementRoute
+  '/_authenticated/marketplace': typeof AuthenticatedMarketplaceRoute
+  '/_authenticated/services': typeof AuthenticatedServicesRoute
+  '/_authenticated/weather': typeof AuthenticatedWeatherRoute
+  '/_authenticated/history': typeof AuthenticatedHistoryRoute
+  '/_authenticated/agents/$agentType': typeof AuthenticatedAgentsAgentTypeRoute
+}
+
+export interface FileRouteTypes {
+  fileRoutesByFullPath: FileRoutesByFullPath
+  fullPaths:
+    | '/'
+    | '/auth'
+    | '/admin'
+    | '/dashboard'
+    | '/chatbot'
+    | '/disease'
+    | '/iot'
+    | '/price-prediction'
+    | '/productivity'
+    | '/profile'
+    | '/soil-fertilizer'
+    | '/crop-management'
+    | '/marketplace'
+    | '/services'
+    | '/weather'
+    | '/history'
+    | '/agents/$agentType'
+  fileRoutesByTo: FileRoutesByTo
+  to:
+    | '/'
+    | '/auth'
+    | '/admin'
+    | '/dashboard'
+    | '/chatbot'
+    | '/disease'
+    | '/iot'
+    | '/price-prediction'
+    | '/productivity'
+    | '/profile'
+    | '/soil-fertilizer'
+    | '/crop-management'
+    | '/marketplace'
+    | '/services'
+    | '/weather'
+    | '/history'
+    | '/agents/$agentType'
+  id:
+    | '__root__'
+    | '/'
+    | '/auth'
+    | '/admin'
+    | '/_authenticated'
+    | '/_authenticated/dashboard'
+    | '/_authenticated/chatbot'
+    | '/_authenticated/disease'
+    | '/_authenticated/iot'
+    | '/_authenticated/price-prediction'
+    | '/_authenticated/productivity'
+    | '/_authenticated/profile'
+    | '/_authenticated/soil-fertilizer'
+    | '/_authenticated/crop-management'
+    | '/_authenticated/marketplace'
+    | '/_authenticated/services'
+    | '/_authenticated/weather'
+    | '/_authenticated/history'
+    | '/_authenticated/agents/$agentType'
+  fileRoutesById: FileRoutesById
+}
+
+export interface RootRouteChildren {
+  IndexRoute: typeof IndexRoute
+  AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
+  AuthRoute: typeof AuthRoute
+  AdminRoute: typeof AdminRoute
+}
+
 interface AuthenticatedRouteRouteChildren {
   AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
   AuthenticatedHistoryRoute: typeof AuthenticatedHistoryRoute
+  AuthenticatedChatbotRoute: typeof AuthenticatedChatbotRoute
+  AuthenticatedDiseaseRoute: typeof AuthenticatedDiseaseRoute
+  AuthenticatedIotRoute: typeof AuthenticatedIotRoute
+  AuthenticatedPricePredictionRoute: typeof AuthenticatedPricePredictionRoute
+  AuthenticatedProductivityRoute: typeof AuthenticatedProductivityRoute
+  AuthenticatedProfileRoute: typeof AuthenticatedProfileRoute
+  AuthenticatedSoilFertilizerRoute: typeof AuthenticatedSoilFertilizerRoute
+  AuthenticatedCropManagementRoute: typeof AuthenticatedCropManagementRoute
+  AuthenticatedMarketplaceRoute: typeof AuthenticatedMarketplaceRoute
+  AuthenticatedServicesRoute: typeof AuthenticatedServicesRoute
+  AuthenticatedWeatherRoute: typeof AuthenticatedWeatherRoute
   AuthenticatedAgentsAgentTypeRoute: typeof AuthenticatedAgentsAgentTypeRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
   AuthenticatedHistoryRoute: AuthenticatedHistoryRoute,
+  AuthenticatedChatbotRoute: AuthenticatedChatbotRoute,
+  AuthenticatedDiseaseRoute: AuthenticatedDiseaseRoute,
+  AuthenticatedIotRoute: AuthenticatedIotRoute,
+  AuthenticatedPricePredictionRoute: AuthenticatedPricePredictionRoute,
+  AuthenticatedProductivityRoute: AuthenticatedProductivityRoute,
+  AuthenticatedProfileRoute: AuthenticatedProfileRoute,
+  AuthenticatedSoilFertilizerRoute: AuthenticatedSoilFertilizerRoute,
+  AuthenticatedCropManagementRoute: AuthenticatedCropManagementRoute,
+  AuthenticatedMarketplaceRoute: AuthenticatedMarketplaceRoute,
+  AuthenticatedServicesRoute: AuthenticatedServicesRoute,
+  AuthenticatedWeatherRoute: AuthenticatedWeatherRoute,
   AuthenticatedAgentsAgentTypeRoute: AuthenticatedAgentsAgentTypeRoute,
 }
 
@@ -157,7 +441,9 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
   AuthRoute: AuthRoute,
+  AdminRoute: AdminRoute,
 }
+
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()

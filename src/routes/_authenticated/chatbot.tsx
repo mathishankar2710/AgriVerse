@@ -18,21 +18,73 @@ interface Message {
   timestamp: Date;
 }
 
-const SMART_PROMPTS = [
-  "How to treat leaf spot in tomatoes?",
-  "What crops grow best in black soil during winter?",
-  "Calculate NPK ratio for potato growth stage.",
-  "Create a low-cost drip irrigation layout.",
-];
+const botTranslations: Record<string, Record<string, any>> = {
+  english: {
+    title: "AI Smart Farming Assistant",
+    description: "Your localized agronomist bot for diagnosing diseases, NPK schedules, and crop rotation advices.",
+    bot_intro: "Hello! I am your AI Smart Farming Assistant. Ask me anything about crop optimization, fertilizers, pest control, weather-adaptive sowing, or IoT controls.",
+    input_placeholder: "Ask AgriVerse anything...",
+    quick_suggestions: [
+      "How to treat leaf spot in tomatoes?",
+      "What crops grow best in black soil during winter?",
+      "Calculate NPK ratio for potato growth stage.",
+      "Create a low-cost drip irrigation layout.",
+    ],
+    thinking: "Thinking..."
+  },
+  tamil: {
+    title: "AI விவசாய உதவியாளர்",
+    description: "மண் பரிசோதனை, உரம் கணக்கீடு, பயிர் நோய்கள் மற்றும் பிற விவசாய சந்தேகங்களுக்கு தீர்வு காணுங்கள்.",
+    bot_intro: "வணக்கம்! நான் உங்கள் அக்ரிவர்ஸ் AI உதவியாளர். உர அளவு, பயிர் பாதுகாப்பு, வானிலை மாற்றங்கள் அல்லது மோட்டார் பம்ப் கட்டுப்பாடு பற்றி என்னிடம் கேளுங்கள்.",
+    input_placeholder: "விவசாய கேள்விகளை இங்கே கேட்கவும்...",
+    quick_suggestions: [
+      "தக்காளி இலையில் கரும்புள்ளி நோய் தீர்வு என்ன?",
+      "குளிர்காலத்தில் கரிசல் மண்ணுக்கு ஏற்ற பயிர்கள் யாவை?",
+      "உருளைக்கிழங்கிற்கான NPK உரம் கணக்கிடுக.",
+      "குறைந்த செலவில் சொட்டு நீர் பாசனம் அமைப்பது எப்படி?",
+    ],
+    thinking: "சிந்திக்கிறது..."
+  }
+};
 
 function ChatbotPage() {
+  const [lang, setLang] = useState("english");
+
+  // Load language settings dynamically
+  useEffect(() => {
+    const saved = localStorage.getItem("app_lang") || "english";
+    setLang(saved);
+
+    const handleLangChange = () => {
+      setLang(localStorage.getItem("app_lang") || "english");
+    };
+    window.addEventListener("languageChanged", handleLangChange);
+    return () => window.removeEventListener("languageChanged", handleLangChange);
+  }, []);
+
+  const bt = botTranslations[lang] || botTranslations.english;
+
   const [messages, setMessages] = useState<Message[]>([
     {
       sender: "bot",
-      text: "Hello! I am your AI Smart Farming Assistant. Ask me anything about crop optimization, fertilizers, pest control, weather-adaptive sowing, or IoT controls.",
+      text: bt.bot_intro,
       timestamp: new Date(),
     },
   ]);
+
+  // Sync intro message if language updates while chat is clean
+  useEffect(() => {
+    if (messages.length === 1 && messages[0].sender === "bot") {
+      setMessages([
+        {
+          sender: "bot",
+          text: bt.bot_intro,
+          timestamp: new Date(),
+        }
+      ]);
+    }
+  }, [lang]);
+
   const [input, setInput] = useState<string>("");
   const [sending, setSending] = useState<boolean>(false);
   
@@ -62,51 +114,40 @@ function ChatbotPage() {
       const res = await agentCallFn({
         data: {
           agentType: "chatbot",
-          inputs: { query: trimmed }
+          inputs: { query: trimmed },
+          language: lang
         }
       });
       
       const botMsg: Message = {
         sender: "bot",
-        text: res.output,
+        text: res?.output || "I'm sorry, I encountered an issue compiling the response.",
         timestamp: new Date(),
       };
       setMessages((prev) => [...prev, botMsg]);
     } catch (e) {
       console.error(e);
-      toast.error("Failed to fetch response. Using offline assistant...");
-      
-      // Fallback response if API fails
-      setTimeout(() => {
-        const botMsg: Message = {
-          sender: "bot",
-          text: "I am having trouble connecting to my central brain. Please check your internet connection or verify your API keys. \n\n*Quick tip: For crop recommendations, you can also use our specialized Crop Recommendation agent in the dashboard!*",
-          timestamp: new Date(),
-        };
-        setMessages((prev) => [...prev, botMsg]);
-      }, 1000);
+      toast.error("Failed to communicate with AgriVerse agronomist agent");
     } finally {
       setSending(false);
     }
   };
 
   return (
-    <div className="space-y-4 max-w-4xl mx-auto flex flex-col h-[calc(100vh-140px)] md:h-[calc(100vh-80px)]">
-      {/* Header */}
+    <div className="space-y-6 max-w-4xl mx-auto text-left h-[calc(100vh-140px)] flex flex-col">
       <div className="flex-shrink-0">
-        <h1 className="text-xl font-bold flex items-center gap-2 text-foreground">
-          <MessageSquareCode className="h-5 w-5 text-green-700 animate-pulse" />
-          AI Smart Farming Assistant Chatbot
+        <h1 className="text-2xl font-bold flex items-center gap-2 text-foreground">
+          <MessageSquareCode className="h-6 w-6 text-green-700" />
+          {bt.title}
         </h1>
-        <p className="text-[11px] text-muted-foreground">
-          Get real-time agronomy diagnostics, crop schedules, and advice powered by Groq llama-3.3-70b.
+        <p className="text-xs text-muted-foreground mt-0.5">
+          {bt.description}
         </p>
       </div>
 
-      {/* Main Chat Container */}
-      <Card className="flex-1 rounded-2xl border-green-100/50 shadow-sm bg-white overflow-hidden flex flex-col min-h-0">
-        {/* Messages List Area */}
-        <div className="flex-1 overflow-y-auto p-4 md:p-6 space-y-4 min-h-0 bg-slate-50/30">
+      <Card className="rounded-2xl border-green-100/50 shadow-sm bg-white flex-1 flex flex-col overflow-hidden min-h-0">
+        {/* Chat History Area */}
+        <div className="flex-1 overflow-y-auto p-4 space-y-4 min-h-0 scrollbar-thin">
           {messages.map((m, idx) => {
             const isUser = m.sender === "user";
             return (
@@ -173,7 +214,7 @@ function ChatbotPage() {
               </div>
               <div className="bg-white border border-green-50 rounded-2xl rounded-tl-none p-3 text-xs text-muted-foreground flex items-center gap-1.5 shadow-sm">
                 <RefreshCw className="h-3 w-3 animate-spin text-green-600" />
-                Thinking...
+                {bt.thinking}
               </div>
             </div>
           )}
@@ -184,7 +225,7 @@ function ChatbotPage() {
         <div className="border-t border-green-50/60 p-3 bg-white flex-shrink-0">
           {/* Smart Suggestion Chips */}
           <div className="flex gap-1.5 overflow-x-auto pb-2.5 scrollbar-thin">
-            {SMART_PROMPTS.map((prompt, idx) => (
+            {bt.quick_suggestions.map((prompt: string, idx: number) => (
               <button
                 key={idx}
                 onClick={() => handleSend(prompt)}
@@ -208,7 +249,7 @@ function ChatbotPage() {
             <Input
               value={input}
               onChange={(e) => setInput(e.target.value)}
-              placeholder="Ask AgriVerse anything..."
+              placeholder={bt.input_placeholder}
               disabled={sending}
               className="flex-1 rounded-xl border-green-100 focus-visible:ring-green-600 py-5 text-xs shadow-inner"
             />

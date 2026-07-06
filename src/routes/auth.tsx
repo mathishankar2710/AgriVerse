@@ -50,7 +50,7 @@ export const Route = createFileRoute("/auth")({
   };
 
   const signUp = async () => {
-    if (!username.trim()) return toast.error("Please enter a username");
+    if (!username.trim()) return toast.error("Please enter your Farmer Name");
     if (!email || !password) return toast.error("Please enter email and password");
     if (password !== confirmPassword) return toast.error("Passwords do not match");
     if (password.length < 6) return toast.error("Password must be at least 6 characters");
@@ -87,6 +87,19 @@ export const Route = createFileRoute("/auth")({
         if (profileError) {
           console.error("Profiles insertion failed:", profileError.message);
         }
+
+        // Initialize local profile settings with the entered Farmer Name
+        localStorage.setItem("farmer_profile", JSON.stringify({
+          fullName: username,
+          district: "Coimbatore",
+          state: "Tamil Nadu",
+          phone: "",
+          landSize: "4.5",
+          soilType: "black",
+          waterSource: "well",
+          primaryCrop: "turmeric",
+          farmingMethod: "organic"
+        }));
       } catch (err) {
         console.error("Failed hashing or profile synchronization:", err);
       }
@@ -121,7 +134,7 @@ export const Route = createFileRoute("/auth")({
               AgriVerse
             </Link>
           </CardTitle>
-          <p className="text-xs font-medium text-muted-foreground/80 mt-1">Smart AI Agriculture Companion</p>
+          <p className="text-xs font-medium text-muted-foreground/80 mt-1">Complete Digital Agriculture Ecosystem</p>
         </CardHeader>
         
         <CardContent className="px-6 pb-8 pt-4">
@@ -182,11 +195,11 @@ export const Route = createFileRoute("/auth")({
               <TabsContent value="signup" className="mt-2 space-y-4">
                 <div className="space-y-4">
                   <div className="space-y-1.5">
-                    <Label htmlFor="username-signup" className="text-xs font-semibold text-muted-foreground">Username</Label>
+                    <Label htmlFor="username-signup" className="text-xs font-semibold text-muted-foreground">Farmer Name</Label>
                     <Input 
                       id="username-signup" 
                       type="text" 
-                      placeholder="farmer_john" 
+                      placeholder="e.g. John Doe / வேலுச்சாமி" 
                       value={username} 
                       onChange={(e) => setUsername(e.target.value)}
                       className="rounded-xl border-green-100 focus-visible:ring-green-600 py-5"

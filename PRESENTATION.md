@@ -24,7 +24,7 @@ This presentation deck outlines the **AgriVerse** platform. It contains the prob
 ---
 
 ### Slide 3: The Solution
-* **Regional Localization**: Custom default weather tracking (Coimbatore/Kongu region) and Tamil script translations (e.g., *Nel (நெல்)*, *Manjal (மஞ்சள்)*).
+* **Regional Localization**: Custom default weather tracking (Coimbatore region) and Tamil script translations (e.g., *Nel (நெல்)*, *Manjal (மஞ்சள்)*).
 * **Instant Disease Scanning**: Upload leaf photos or describe symptoms in plain text to get rapid, bulleted diagnostics containing cause and cure instructions.
 * **Local Remedies**: Solution reports prescribe specific medicines (fungicides) alongside regional organic inputs (e.g., *Panchagavya*, *neem cake manure*, and *vermicompost*).
 * **AI Price Analytics**: Price forecasting charts populated with standard Tamil Nadu crops (Sugarcane, Banana, Mango, Groundnut, etc.) to estimate the best sales windows.
@@ -59,7 +59,7 @@ This presentation deck outlines the **AgriVerse** platform. It contains the prob
 
 ### Slide 7: Feature Focus — Weather Forecast & IoT Controls
 * **Auto-Geolocation**: Prompts for browser GPS location permission immediately on mount to load accurate local forecasts.
-* **Fallback Defaults**: Automatically loads Coimbatore (Kongu Region) weather telemetry if location access is blocked.
+* **Fallback Defaults**: Automatically loads Coimbatore weather telemetry if location access is blocked.
 * **Interactive Map**: Allows selecting any coordinates globally directly from the map widget to pull local weather forecasts.
 * **Smart Motor Status**: Simulated IoT control panel displaying live Motor ON/OFF status toggles.
 

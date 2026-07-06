@@ -49,11 +49,15 @@ async function callGroq(system: string, user: string): Promise<string> {
 export const callAgent = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
   .inputValidator(
-    (input: { agentType: string; inputs: Record<string, string> }) => input,
+    (input: { agentType: string; inputs: Record<string, string>; language?: string }) => input,
   )
   .handler(async ({ data, context }) => {
-    const system = SYSTEM_PROMPTS[data.agentType];
+    let system = SYSTEM_PROMPTS[data.agentType];
     if (!system) throw new Error("Unknown agent type");
+
+    if (data.language === "tamil") {
+      system += " IMPORTANT: You MUST write your entire response in Tamil script. Keep the structure, bold headings, and short bullet points intact, but write all explanations, instructions, recommendations, and local terms in fluent Tamil. Avoid Hindi words or Hindi script under all circumstances.";
+    }
 
     const userMsg = Object.entries(data.inputs)
       .filter(([, v]) => v && v.trim() !== "")
@@ -65,7 +69,7 @@ export const callAgent = createServerFn({ method: "POST" })
     const { error } = await context.supabase.from("agent_history").insert({
       user_id: context.userId,
       agent_type: data.agentType,
-      input_json: data.inputs,
+      input_json: { ...data.inputs, language: data.language },
       output_text: output,
     });
     if (error) console.error("history insert error:", error);
@@ -134,11 +138,15 @@ async function callGroqVision(system: string, userPrompt: string, base64Image: s
 export const detectCropDisease = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
   .inputValidator(
-    (input: { base64Image?: string; problemDescription?: string; cropType: string }) => input,
+    (input: { base64Image?: string; problemDescription?: string; cropType: string; language?: string }) => input,
   )
   .handler(async ({ data, context }) => {
-    const system = "You are a professional agronomist and plant pathologist specializing in agricultural practices in Tamil Nadu, India (specifically the Kongu region). Identify crop diseases and suggest local organic manures (like Panchagavya, neem cake manure, vermicompost, bio-inoculants) and appropriate medicinal treatments (chemical/biological fungicides/pesticides). You MUST follow a strict output format, keep explanations short and bulleted, and avoid long paragraphs or filler text.";
+    let system = "You are a professional agronomist and plant pathologist specializing in agricultural practices in Tamil Nadu, India. Identify crop diseases and suggest local organic manures (like Panchagavya, neem cake manure, vermicompost, bio-inoculants) and appropriate medicinal treatments (chemical/biological fungicides/pesticides). You MUST follow a strict output format, keep explanations short and bulleted, and avoid long paragraphs or filler text.";
     
+    if (data.language === "tamil") {
+      system += " IMPORTANT: You MUST write your entire response (except the headers '### Disease Name:', '**How it comes**:', '**Solution to clear this**:', and '**How to prevent for future**:') in Tamil script. The headers must be written exactly as specified in English, but all explanations, details, disease names, treatments, and organic remedies under them must be written in fluent Tamil.";
+    }
+
     const userPrompt = `Identify the crop disease for ${data.cropType || "the crop"}.
 ${data.problemDescription ? `User's description of symptoms/problem: "${data.problemDescription}"` : ""}
 ${data.base64Image ? "An image of the plant has been provided." : "No image was provided; diagnose based on the description of symptoms."}
@@ -171,7 +179,7 @@ You MUST structure your response exactly like this. Keep it extremely brief and 
       const { error } = await context.supabase.from("agent_history").insert({
         user_id: context.userId,
         agent_type: `disease_scan:${data.cropType || "unknown"}`,
-        input_json: { crop: data.cropType, hasImage: !!data.base64Image, hasDescription: !!data.problemDescription },
+        input_json: { crop: data.cropType, hasImage: !!data.base64Image, hasDescription: !!data.problemDescription, language: data.language },
         output_text: output,
       });
       if (error) console.error("history insert error:", error);

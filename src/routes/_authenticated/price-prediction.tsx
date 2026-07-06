@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
@@ -158,7 +158,89 @@ const CROP_PRICE_DATA: Record<string, Array<{ month: string; historical?: number
   ],
 };
 
+const translations: Record<string, Record<string, any>> = {
+  english: {
+    title: "Crop Price Prediction System",
+    subtitle: "Model future wholesale prices based on historic trends and expected market supply conditions.",
+    market_settings: "Market Settings",
+    market_desc: "Select variables to forecast",
+    select_crop: "Select Crop",
+    supply_shift: "Expected Supply Shift (%)",
+    change_yield: "Change in yield",
+    btn_recalc: "Re-calculate Forecast",
+    card_current: "Current Mandi Rate",
+    card_current_desc: "Latest reported wholesale price.",
+    card_pred: "Predicted Rate (3m)",
+    card_pred_desc: "Forecasted rate incorporating trends.",
+    card_trend: "3-Month Price Trend",
+    card_trend_desc: "Aggregated rate direction change.",
+    card_window: "Optimal Sale Window",
+    card_window_desc: "Best forecasted sell month for max profit.",
+    chart_title: "Pricing Trend Chart",
+    chart_desc: "Continuous pricing from historical to predicted intervals",
+    legend_hist: "Historical Rate (₹)",
+    legend_pred: "Predicted Forecast (₹)",
+    disclaimer_title: "Market Prediction Disclaimer",
+    disclaimer_desc: "Market pricing models are generated using historical seasonality cycles and user supply factors. Actual spot rates at your local mandi can fluctuate based on sudden weather changes, government export policies, and fuel prices.",
+    unit: "quintal",
+    toast_success: "Price model adjusted with custom supply shift"
+  },
+  tamil: {
+    title: "பயிர் விலை கணிப்பு முறை",
+    subtitle: "வரலாற்றுப் போக்குகள் மற்றும் சந்தை விநியோக நிலைகளின் அடிப்படையில் எதிர்கால விலைகளைக் கணக்கிடுங்கள்.",
+    market_settings: "சந்தை அமைப்புகள்",
+    market_desc: "விலையைக் கணிக்கப் பயிரைத் தேர்ந்தெடுக்கவும்",
+    select_crop: "பயிரைத் தேர்ந்தெடு",
+    supply_shift: "எதிர்பார்க்கப்படும் விநியோக மாற்றம் (%)",
+    change_yield: "விளைச்சலில் ஏற்படும் மாற்றம்",
+    btn_recalc: "மீண்டும் கணக்கிடு",
+    card_current: "தற்போதைய சந்தை விலை",
+    card_current_desc: "சந்தையில் தற்போதைய அதிகாரப்பூர்வ விலை.",
+    card_pred: "கணிக்கப்பட்ட விலை (3 மாதம்)",
+    card_pred_desc: "போக்குவரத்து மற்றும் தேவையை அடிப்படையாகக் கொண்ட கணிப்பு.",
+    card_trend: "3-மாத விலை போக்கு",
+    card_trend_desc: "விலை மாற்றத்தின் ஒட்டுமொத்த திசை.",
+    card_window: "விற்பனைக்கு உகந்த காலம்",
+    card_window_desc: "அதிக லாபம் பெற உகந்த விற்பனை மாதம்.",
+    chart_title: "விலை போக்கு வரைபடம்",
+    chart_desc: "வரலாற்று விலை மற்றும் கணிக்கப்பட்ட விலையின் தொடர்ச்சியான ஒப்பீடு",
+    legend_hist: "வரலாற்று விலை (₹)",
+    legend_pred: "கணிக்கப்பட்ட விலை (₹)",
+    disclaimer_title: "விலை கணிப்பு நிபந்தனைகள்",
+    disclaimer_desc: "விலை கணிப்புகள் வரலாற்று தரவுகள் மற்றும் கால சுழற்சியை அடிப்படையாகக் கொண்டவை. சந்தையின் உண்மையான விலையானது வானிலை மாற்றங்கள், அரசின் ஏற்றுமதி கொள்கைகள் மற்றும் எரிபொருள் விலையின் அடிப்படையில் மாறுபடலாம்.",
+    unit: "குவிண்டால்",
+    toast_success: "விலை கணிப்பு மாதிரி மாற்றி அமைக்கப்பட்டுள்ளது!"
+  }
+};
+
+const translateMonth = (month: string, lang: string) => {
+  if (lang !== "tamil") return month;
+  const map: Record<string, string> = {
+    Jan: "ஜனவரி", Feb: "பிப்ரவரி", Mar: "மார்ச்", Apr: "ஏப்ரல்", May: "மே", Jun: "ஜூன்",
+    Jul: "ஜூலை", Aug: "ஆகஸ்ட்", Sep: "செப்டம்பர்", Oct: "அக்டோபர்", Nov: "நவம்பர்", Dec: "டிசம்பர்",
+    January: "ஜனவரி", February: "பிப்ரவரி", March: "மார்ச்", April: "ஏப்ரல்",
+    June: "ஜூன்", July: "ஜூலை", August: "ஆகஸ்ட்", September: "செப்டம்பர்", October: "அக்டோபர்"
+  };
+  return map[month] || month;
+};
+
 function PricePredictionPage() {
+  const [lang, setLang] = useState("english");
+
+  // Load language settings dynamically
+  useEffect(() => {
+    const saved = localStorage.getItem("app_lang") || "english";
+    setLang(saved);
+
+    const handleLangChange = () => {
+      setLang(localStorage.getItem("app_lang") || "english");
+    };
+    window.addEventListener("languageChanged", handleLangChange);
+    return () => window.removeEventListener("languageChanged", handleLangChange);
+  }, []);
+
+  const pt = translations[lang] || translations.english;
+
   const [crop, setCrop] = useState<string>("turmeric");
   const [market, setMarket] = useState<string>("erode");
   const [supplyShift, setSupplyShift] = useState<number>(0);
@@ -185,7 +267,7 @@ function PricePredictionPage() {
       });
       setCustomForecast(modified);
       setCalculating(false);
-      toast.success("Price model adjusted with custom supply shift");
+      toast.success(pt.toast_success);
     }, 600);
   };
 
@@ -198,31 +280,35 @@ function PricePredictionPage() {
     
     const diff = finalPredicted - lastHistorical;
     const pct = ((diff / lastHistorical) * 100).toFixed(1);
-    const direction = diff >= 0 ? "Rising" : "Falling";
+    
+    let direction = diff >= 0 ? "Rising" : "Falling";
+    if (lang === "tamil") {
+      direction = diff >= 0 ? "உயர்கிறது" : "குறைகிறது";
+    }
 
     const maxPredictionIndex = predictions.indexOf(Math.max(...predictions));
     const months = rawData.filter(d => d.predicted !== undefined).map(d => d.month);
     const bestMonth = months[maxPredictionIndex] || "September";
 
     return {
-      currentPrice: `₹${lastHistorical}/quintal`,
-      predictedPrice: `₹${finalPredicted}/quintal`,
+      currentPrice: `₹${lastHistorical}/${pt.unit}`,
+      predictedPrice: `₹${finalPredicted}/${pt.unit}`,
       trend: `${diff >= 0 ? "+" : ""}${pct}% (${direction})`,
-      bestWindow: bestMonth,
+      bestWindow: translateMonth(bestMonth, lang),
     };
   };
 
   const stats = getStats();
 
   return (
-    <div className="space-y-6 max-w-5xl mx-auto">
+    <div className="space-y-6 max-w-5xl mx-auto text-left">
       <div>
         <h1 className="text-2xl font-bold flex items-center gap-2 text-foreground">
-          <ChartIcon className="h-6 w-6 text-green-700 animate-pulse" />
-          Crop Price Prediction System
+          <ChartIcon className="h-6 w-6 text-green-700" />
+          {pt.title}
         </h1>
-        <p className="text-xs text-muted-foreground">
-          Model future wholesale prices based on historic trends and expected market supply conditions.
+        <p className="text-xs text-muted-foreground mt-0.5">
+          {pt.subtitle}
         </p>
       </div>
 
@@ -230,34 +316,34 @@ function PricePredictionPage() {
       <div className="grid gap-6 md:grid-cols-3">
         <Card className="md:col-span-1 rounded-2xl border-green-100/50 bg-white shadow-sm flex flex-col justify-between">
           <CardHeader className="pb-4">
-            <CardTitle className="text-base font-bold">Market Settings</CardTitle>
-            <CardDescription className="text-xs">Select variables to forecast</CardDescription>
+            <CardTitle className="text-base font-bold">{pt.market_settings}</CardTitle>
+            <CardDescription className="text-xs">{pt.market_desc}</CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="space-y-1.5">
-              <Label className="text-xs font-semibold text-muted-foreground">Select Crop</Label>
+              <Label className="text-xs font-semibold text-muted-foreground">{pt.select_crop}</Label>
               <Select value={crop} onValueChange={(val) => { setCrop(val); setCustomForecast(null); }}>
                 <SelectTrigger className="rounded-xl border-green-100 focus:ring-green-600">
                   <SelectValue placeholder="Crop Type" />
                 </SelectTrigger>
                 <SelectContent className="rounded-xl border-green-100 max-h-56 overflow-y-auto">
-                  <SelectItem value="turmeric">Turmeric (Manjal)</SelectItem>
-                  <SelectItem value="coconut">Coconut (Thengai)</SelectItem>
-                  <SelectItem value="cotton">Cotton (Paruthi)</SelectItem>
-                  <SelectItem value="rice">Rice/Paddy (Nel)</SelectItem>
-                  <SelectItem value="tapioca">Tapioca (Maravalli)</SelectItem>
-                  <SelectItem value="sugarcane">Sugarcane (Karumbu)</SelectItem>
-                  <SelectItem value="banana">Banana (Vazhai)</SelectItem>
-                  <SelectItem value="mango">Mango (Maambazham)</SelectItem>
-                  <SelectItem value="groundnut">Groundnut (Kadalai)</SelectItem>
-                  <SelectItem value="maize">Maize (Cholam)</SelectItem>
-                  <SelectItem value="chilli">Chilli (Milagai)</SelectItem>
+                  <SelectItem value="turmeric">{lang === "tamil" ? "மஞ்சள் (Turmeric)" : "Turmeric (Manjal)"}</SelectItem>
+                  <SelectItem value="coconut">{lang === "tamil" ? "தேங்காய் (Coconut)" : "Coconut (Thengai)"}</SelectItem>
+                  <SelectItem value="cotton">{lang === "tamil" ? "பருத்தி (Cotton)" : "Cotton (Paruthi)"}</SelectItem>
+                  <SelectItem value="rice">{lang === "tamil" ? "நெல் / அரிசி (Rice)" : "Rice/Paddy (Nel)"}</SelectItem>
+                  <SelectItem value="tapioca">{lang === "tamil" ? "மரவள்ளிக்கிழங்கு (Tapioca)" : "Tapioca (Maravalli)"}</SelectItem>
+                  <SelectItem value="sugarcane">{lang === "tamil" ? "கரும்பு (Sugarcane)" : "Sugarcane (Karumbu)"}</SelectItem>
+                  <SelectItem value="banana">{lang === "tamil" ? "வாழை (Banana)" : "Banana (Vazhai)"}</SelectItem>
+                  <SelectItem value="mango">{lang === "tamil" ? "மாம்பழம் (Mango)" : "Mango (Maambazham)"}</SelectItem>
+                  <SelectItem value="groundnut">{lang === "tamil" ? "நிலக்கடலை (Groundnut)" : "Groundnut (Kadalai)"}</SelectItem>
+                  <SelectItem value="maize">{lang === "tamil" ? "சோளம் (Maize)" : "Maize (Cholam)"}</SelectItem>
+                  <SelectItem value="chilli">{lang === "tamil" ? "மிளகாய் (Chilli)" : "Chilli (Milagai)"}</SelectItem>
                 </SelectContent>
               </Select>
             </div>
 
             <div className="space-y-1.5">
-              <Label className="text-xs font-semibold text-muted-foreground">Expected Supply Shift (%)</Label>
+              <Label className="text-xs font-semibold text-muted-foreground">{pt.supply_shift}</Label>
               <div className="flex gap-2 items-center">
                 <Input
                   type="number"
@@ -266,7 +352,7 @@ function PricePredictionPage() {
                   onChange={(e) => setSupplyShift(parseInt(e.target.value) || 0)}
                   className="rounded-xl border-green-100 focus-visible:ring-green-600"
                 />
-                <span className="text-[10px] text-muted-foreground whitespace-nowrap">Change in yield</span>
+                <span className="text-[10px] text-muted-foreground whitespace-nowrap">{pt.change_yield}</span>
               </div>
             </div>
 
@@ -275,7 +361,7 @@ function PricePredictionPage() {
               disabled={calculating}
               className="w-full bg-green-700 hover:bg-green-800 text-white rounded-xl shadow-lg shadow-green-700/10 py-5 font-semibold text-xs gap-1.5 mt-2"
             >
-              Re-calculate Forecast
+              {calculating ? (lang === "tamil" ? "கணக்கிடப்படுகிறது..." : "Calculating...") : pt.btn_recalc}
             </Button>
           </CardContent>
         </Card>
@@ -284,40 +370,40 @@ function PricePredictionPage() {
         <div className="md:col-span-2 grid gap-4 grid-cols-2">
           <Card className="rounded-2xl border-green-50 shadow-sm bg-white p-4 flex flex-col justify-between">
             <div className="space-y-1">
-              <span className="text-[10px] text-muted-foreground uppercase font-semibold">Current Mandi Rate</span>
+              <span className="text-[10px] text-muted-foreground uppercase font-semibold">{pt.card_current}</span>
               <p className="text-xl font-extrabold text-foreground">{stats.currentPrice}</p>
             </div>
-            <p className="text-[10px] text-muted-foreground mt-2">Latest reported wholesale price.</p>
+            <p className="text-[10px] text-muted-foreground mt-2">{pt.card_current_desc}</p>
           </Card>
 
           <Card className="rounded-2xl border-green-50 shadow-sm bg-white p-4 flex flex-col justify-between">
             <div className="space-y-1">
-              <span className="text-[10px] text-muted-foreground uppercase font-semibold">Predicted Rate (3m)</span>
+              <span className="text-[10px] text-muted-foreground uppercase font-semibold">{pt.card_pred}</span>
               <p className="text-xl font-extrabold text-foreground">{stats.predictedPrice}</p>
             </div>
-            <p className="text-[10px] text-muted-foreground mt-2">Forecasted rate incorporating trends.</p>
+            <p className="text-[10px] text-muted-foreground mt-2">{pt.card_pred_desc}</p>
           </Card>
 
           <Card className="rounded-2xl border-green-50 shadow-sm bg-white p-4 flex flex-col justify-between">
             <div className="space-y-1">
               <div className="flex items-center gap-1.5">
                 <TrendingUp className="h-4 w-4 text-green-700" />
-                <span className="text-[10px] text-muted-foreground uppercase font-semibold">3-Month Price Trend</span>
+                <span className="text-[10px] text-muted-foreground uppercase font-semibold">{pt.card_trend}</span>
               </div>
               <p className="text-base font-extrabold text-green-800">{stats.trend}</p>
             </div>
-            <p className="text-[10px] text-muted-foreground mt-2">Aggregated rate direction change.</p>
+            <p className="text-[10px] text-muted-foreground mt-2">{pt.card_trend_desc}</p>
           </Card>
 
           <Card className="rounded-2xl border-green-50 shadow-sm bg-white p-4 flex flex-col justify-between">
             <div className="space-y-1">
               <div className="flex items-center gap-1.5">
                 <Calendar className="h-4 w-4 text-amber-600" />
-                <span className="text-[10px] text-muted-foreground uppercase font-semibold">Optimal Sale Window</span>
+                <span className="text-[10px] text-muted-foreground uppercase font-semibold">{pt.card_window}</span>
               </div>
               <p className="text-base font-extrabold text-amber-800">{stats.bestWindow}</p>
             </div>
-            <p className="text-[10px] text-muted-foreground mt-2">Best forecasted sell month for max profit.</p>
+            <p className="text-[10px] text-muted-foreground mt-2">{pt.card_window_desc}</p>
           </Card>
         </div>
       </div>
@@ -326,15 +412,15 @@ function PricePredictionPage() {
       <Card className="rounded-2xl border-green-100/50 bg-white shadow-sm overflow-hidden p-5">
         <CardHeader className="p-0 pb-5">
           <CardTitle className="text-base font-bold flex items-center gap-2">
-            Pricing Trend Chart
+            {pt.chart_title}
           </CardTitle>
-          <CardDescription className="text-xs">Continuous pricing from historical to predicted intervals</CardDescription>
+          <CardDescription className="text-xs">{pt.chart_desc}</CardDescription>
         </CardHeader>
         
         <CardContent className="p-0">
           <div className="h-72 w-full text-xs">
             <ResponsiveContainer width="100%" height="100%">
-              <LineChart data={currentData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
+              <LineChart data={currentData.map(d => ({ ...d, month: translateMonth(d.month, lang) }))} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
                 <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f0f5ef" />
                 <XAxis dataKey="month" stroke="#889885" fontSize={11} tickLine={false} />
                 <YAxis stroke="#889885" fontSize={11} tickLine={false} />
@@ -346,7 +432,7 @@ function PricePredictionPage() {
                 <Line 
                   type="monotone" 
                   dataKey="historical" 
-                  name="Historical Rate (₹)" 
+                  name={pt.legend_hist} 
                   stroke="#166534" 
                   strokeWidth={2.5} 
                   dot={{ r: 4 }} 
@@ -355,7 +441,7 @@ function PricePredictionPage() {
                 <Line 
                   type="monotone" 
                   dataKey="predicted" 
-                  name="Predicted Forecast (₹)" 
+                  name={pt.legend_pred} 
                   stroke="#f59e0b" 
                   strokeWidth={2} 
                   strokeDasharray="4 4" 
@@ -371,9 +457,9 @@ function PricePredictionPage() {
       <div className="flex gap-3 bg-blue-50/50 border border-blue-100/50 p-4 rounded-2xl items-start">
         <AlertCircle className="h-5 w-5 text-blue-600 flex-shrink-0 mt-0.5" />
         <div className="space-y-1">
-          <p className="text-xs font-bold text-blue-900">Market Prediction Disclaimer</p>
+          <p className="text-xs font-bold text-blue-900">{pt.disclaimer_title}</p>
           <p className="text-[10px] text-blue-800/80 leading-relaxed">
-            Market pricing models are generated using historical seasonality cycles and user supply factors. Actual spot rates at your local mandi can fluctuate based on sudden weather changes, government export policies, and fuel prices.
+            {pt.disclaimer_desc}
           </p>
         </div>
       </div>

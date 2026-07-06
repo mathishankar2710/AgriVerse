@@ -20,7 +20,7 @@
 ### 1. 🔍 Disease Detection System
 * **Hybrid Diagnostics**: Diagnose plant issues using **images (photos of leaves)**, **textual symptom descriptions**, or **both together**.
 * **Pathologist Remedies**: Real-time diagnostic reports outlining the disease name, causes (**How it comes**), treatments (**Solution to clear this**), and prevention (**How to prevent for future**).
-* **Tamil Nadu & Kongu Focused**: AI recommendations explicitly specify medicines (fungicides/pesticides) alongside localized organic manures (such as **Panchagavya**, **neem cake manure**, and **vermicompost**).
+* **Tamil Nadu**: AI recommendations explicitly specify medicines (fungicides/pesticides) alongside localized organic manures (such as **Panchagavya**, **neem cake manure**, and **vermicompost**).
 
 ### 2. 📈 Crop Price Prediction System
 * **Tamil Nadu Crop Catalog**: Built-in historical and predictive pricing datasets for major state crops:
@@ -42,7 +42,7 @@
 * **Tamil Translation Hook**: Auto-translates crop and botanical names to Tamil in parentheses (e.g. *Paddy (நெல்)*) for high local readability, completely avoiding Hindi terms.
 
 ### 4. 🌦️ Localized Weather & IoT Systems
-* **Auto-Geolocation**: Instantly requests GPS coordinate permission on load to fetch local forecasts, defaulting to Coimbatore coordinates (representing the Kongu region).
+* **Auto-Geolocation**: Instantly requests GPS coordinate permission on load to fetch local forecasts, defaulting to Coimbatore coordinates.
 * **Smart Motor Controls**: IoT simulation to monitor and toggle water pump motor status remotely.
 
 ### 5. 🔐 Secure Profiles & Authentication
@@ -57,6 +57,80 @@
 * **Visuals & Charts**: [Recharts](https://recharts.org/) & Lucide React
 * **Backend Database & Auth**: [Supabase](https://supabase.com/)
 * **AI Model Engine**: [Google Gemini 2.5 Flash API](https://ai.google.dev/)
+
+---
+
+## 📂 Project Structure
+
+```text
+agri-assistant-pro-main/
+├── .dockerignore
+├── .env
+├── .gitignore
+├── .prettierignore
+├── .prettierrc
+├── Dockerfile
+├── PRESENTATION.md
+├── README.md
+├── bun.lock
+├── bunfig.toml
+├── components.json
+├── docker-compose.yml
+├── eslint.config.js
+├── package.json
+├── tsconfig.json
+├── vite.config.ts
+├── public/
+│   ├── bcdaf958259e93f8483660bb33e3fd33.jpg
+│   ├── favicon.ico
+│   └── logo.png
+├── supabase/
+│   ├── config.toml
+│   └── migrations/
+│       ├── 20260704080936_ed875488-b8a2-4993-8a1d-5f94e5bea9c6.sql
+│       └── 20260704093200_create_profiles.sql
+└── src/
+    ├── routeTree.gen.ts
+    ├── router.tsx
+    ├── server.ts
+    ├── start.ts
+    ├── styles.css
+    ├── assets/
+    ├── hooks/
+    │   └── use-mobile.tsx
+    ├── components/
+    │   ├── AgentForm.tsx
+    │   └── ui/  # (Contains shadcn component files like button.tsx, dialog.tsx, etc.)
+    ├── integrations/
+    │   └── supabase/
+    │       ├── auth-attacher.ts
+    │       ├── auth-middleware.ts
+    │       ├── client.server.ts
+    │       ├── client.ts
+    │       └── types.ts
+    ├── lib/
+    │   ├── agent-config.ts
+    │   ├── agents.functions.ts
+    │   ├── error-capture.ts
+    │   ├── error-page.ts
+    │   ├── utils.ts
+    │   └── weather-services.ts
+    └── routes/
+        ├── README.md
+        ├── __root.tsx
+        ├── auth.tsx
+        ├── index.tsx
+        └── _authenticated/
+            ├── route.tsx
+            ├── agents.$agentType.tsx
+            ├── chatbot.tsx
+            ├── dashboard.tsx
+            ├── disease.tsx
+            ├── history.tsx
+            ├── iot.tsx
+            ├── price-prediction.tsx
+            └── productivity.tsx
+```
 
 ---
 
