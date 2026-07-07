@@ -1,7 +1,7 @@
-# 🌿 AgriVerse — Smart AI Agriculture Suite
+﻿# 🌿 Agri Agent — Smart AI Agriculture Suite
 
 <div align="center">
-  <img src="./public/logo.png" alt="AgriVerse Logo" width="120" height="120" style="border-radius: 20%;" />
+  <img src="./public/logo.png" alt="Agri Agent Logo" width="120" height="120" style="border-radius: 20%;" />
   <p align="center">
     <strong>An advanced, localized AI companion for maximizing crop productivity, forecasting market prices, and diagnosing crop pathology.</strong>
   </p>
@@ -171,7 +171,7 @@ agri-assistant-pro-main/
 
 1. Push your repository to GitHub.
 2. Go to [Vercel](https://vercel.com/) and click **Add New > Project**.
-3. Import the `AgriVerse` repository.
+3. Import the `Agri Agent` repository.
 4. **Configure Project Settings**:
    * **Framework Preset**: Select **Vite** or leave it as **Other (Auto-detected)**.
    * **Build Command**: `npm run build`

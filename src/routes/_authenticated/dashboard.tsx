@@ -42,7 +42,7 @@ export const Route = createFileRoute("/_authenticated/dashboard")({
 
 const dashboardTranslations: Record<string, Record<string, string>> = {
   english: {
-    grow_smarter: "Grow Smarter with AgriVerse",
+    grow_smarter: "Grow Smarter with Agri Agent",
     hero_desc: "Harness real-time climate telemetry, IoT control, and LLM-powered visual diagnostics to maximize your yields and profits.",
     live_climate: "Live Climate Status",
     gps: "GPS Sync",
@@ -58,12 +58,12 @@ const dashboardTranslations: Record<string, Record<string, string>> = {
     broadcast_desc: "Urgent broadcasts from ecosystem coordinators",
     analytics_title: "Farm Revenue & Expenditure",
     analytics_desc: "Yield valuation vs operational input costs",
-    suite_title: "AgriVerse Suite Portal",
+    suite_title: "Agri Agent Suite Portal",
     suite_desc: "Select a module below to optimize your farm operations"
   },
   tamil: {
-    grow_smarter: "அக்ரிவர்ஸ் மூலம் புத்திசாலித்தனமாக வளருங்கள்",
-    hero_desc: "நேரடி காலநிலை நிலை, IoT கட்டுப்பாடு மற்றும் பயிர் மேலாண்மை பகுப்பாய்வுகளை அக்ரிவர்ஸ் மூலம் எளிதாக அணுகுங்கள்.",
+    grow_smarter: "அக்ரி ஏஜென்ட் மூலம் புத்திசாலித்தனமாக வளருங்கள்",
+    hero_desc: "நேரடி காலநிலை நிலை, IoT கட்டுப்பாடு மற்றும் பயிர் மேலாண்மை பகுப்பாய்வுகளை அக்ரி ஏஜென்ட் மூலம் எளிதாக அணுகுங்கள்.",
     live_climate: "நேரடி காலநிலை நிலை",
     gps: "ஜிபிஎஸ்",
     map_picker: "வரைபடம்",
@@ -78,7 +78,7 @@ const dashboardTranslations: Record<string, Record<string, string>> = {
     broadcast_desc: "ஒருங்கிணைப்பாளர்களிடமிருந்து அவசர அறிவிப்புகள்",
     analytics_title: "விவசாய வருவாய் & செலவினம்",
     analytics_desc: "வருவாய் மதிப்பு மற்றும் உள்ளீட்டு செலவுகள் பகுப்பாய்வு",
-    suite_title: "அக்ரிவர்ஸ் சேவைகள்",
+    suite_title: "அக்ரி ஏஜென்ட் சேவைகள்",
     suite_desc: "விவசாய செயல்பாடுகளை மேம்படுத்த கீழே உள்ள பிரிவை தேர்ந்தெடுக்கவும்"
   }
 };

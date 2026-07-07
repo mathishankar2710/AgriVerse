@@ -1,4 +1,4 @@
-import { createFileRoute, useNavigate, Link } from "@tanstack/react-router";
+﻿import { createFileRoute, useNavigate, Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
@@ -13,8 +13,8 @@ import heroFarm from "@/assets/hero-farm.jpg";
 export const Route = createFileRoute("/auth")({
   head: () => ({
     meta: [
-      { title: "Sign in — AgriVerse" },
-      { name: "description", content: "Sign in or create an AgriVerse account." },
+      { title: "Sign in — Agri Agent" },
+      { name: "description", content: "Sign in or create an Agri Agent account." },
     ],
   }),
   component: AuthPage,
@@ -127,11 +127,11 @@ export const Route = createFileRoute("/auth")({
         
         <CardHeader className="text-center pb-2 pt-6">
           <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-transparent mb-2.5 overflow-hidden">
-            <img src="/logo.png" alt="AgriVerse" className="h-12 w-12 object-contain" />
+            <img src="/logo.png" alt="Agri Agent" className="h-12 w-12 object-contain" />
           </div>
           <CardTitle className="text-2xl font-bold tracking-tight">
             <Link to="/" className="bg-gradient-to-r from-green-800 to-green-600 bg-clip-text text-transparent hover:opacity-90">
-              AgriVerse
+              Agri Agent
             </Link>
           </CardTitle>
           <p className="text-xs font-medium text-muted-foreground/80 mt-1">Complete Digital Agriculture Ecosystem</p>

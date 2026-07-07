@@ -23,7 +23,7 @@ const botTranslations: Record<string, Record<string, any>> = {
     title: "AI Smart Farming Assistant",
     description: "Your localized agronomist bot for diagnosing diseases, NPK schedules, and crop rotation advices.",
     bot_intro: "Hello! I am your AI Smart Farming Assistant. Ask me anything about crop optimization, fertilizers, pest control, weather-adaptive sowing, or IoT controls.",
-    input_placeholder: "Ask AgriVerse anything...",
+    input_placeholder: "Ask Agri Agent anything...",
     quick_suggestions: [
       "How to treat leaf spot in tomatoes?",
       "What crops grow best in black soil during winter?",
@@ -35,7 +35,7 @@ const botTranslations: Record<string, Record<string, any>> = {
   tamil: {
     title: "AI விவசாய உதவியாளர்",
     description: "மண் பரிசோதனை, உரம் கணக்கீடு, பயிர் நோய்கள் மற்றும் பிற விவசாய சந்தேகங்களுக்கு தீர்வு காணுங்கள்.",
-    bot_intro: "வணக்கம்! நான் உங்கள் அக்ரிவர்ஸ் AI உதவியாளர். உர அளவு, பயிர் பாதுகாப்பு, வானிலை மாற்றங்கள் அல்லது மோட்டார் பம்ப் கட்டுப்பாடு பற்றி என்னிடம் கேளுங்கள்.",
+    bot_intro: "வணக்கம்! நான் உங்கள் அக்ரி ஏஜென்ட் AI உதவியாளர். உர அளவு, பயிர் பாதுகாப்பு, வானிலை மாற்றங்கள் அல்லது மோட்டார் பம்ப் கட்டுப்பாடு பற்றி என்னிடம் கேளுங்கள்.",
     input_placeholder: "விவசாய கேள்விகளை இங்கே கேட்கவும்...",
     quick_suggestions: [
       "தக்காளி இலையில் கரும்புள்ளி நோய் தீர்வு என்ன?",
@@ -127,7 +127,7 @@ function ChatbotPage() {
       setMessages((prev) => [...prev, botMsg]);
     } catch (e) {
       console.error(e);
-      toast.error("Failed to communicate with AgriVerse agronomist agent");
+      toast.error("Failed to communicate with Agri Agent agronomist agent");
     } finally {
       setSending(false);
     }

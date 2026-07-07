@@ -1,13 +1,13 @@
-# 🌿 AgriVerse Project Presentation Deck
+﻿# 🌿 Agri Agent Project Presentation Deck
 
-This presentation deck outlines the **AgriVerse** platform. It contains the problem statement, solution overview, features, technical architecture, and system workflows.
+This presentation deck outlines the **Agri Agent** platform. It contains the problem statement, solution overview, features, technical architecture, and system workflows.
 
 ---
 
 ## 📽️ Slides Outline
 
 ### Slide 1: Cover Page
-* **Title**: AgriVerse
+* **Title**: Agri Agent
 * **Subtitle**: Smart AI Agriculture Suite for Tamil Nadu Farmers
 * **Developer**: mathishankar2710
 * **Core Vision**: Bridging the gap between cutting-edge AI and regional agricultural practices to maximize crop yield, optimize costs, and predict market prices.
@@ -113,7 +113,7 @@ sequenceDiagram
   ```
   App starts at `http://localhost:3001`.
 * **GitHub Repository**:
-  `https://github.com/mathishankar2710/AgriVerse.git`
+  `https://github.com/mathishankar2710/Agri Agent.git`
 * **Vercel Deploy Config**:
   * **Build Command**: `npm run build`
   * **Output Directory**: `.vercel/output`

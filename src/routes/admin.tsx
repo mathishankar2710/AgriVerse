@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+﻿import { createFileRoute } from "@tanstack/react-router";
 import { useState, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -99,7 +99,7 @@ function StandaloneAdminPortal() {
         const isCurrentUser = localProfile && (u.username === localProfile.fullName || u.email === localProfile.email);
         return {
           id: u.id,
-          email: u.email || "no-email@agriverse.com",
+          email: u.email || "no-email@Agri Agent.com",
           name: u.username || "Farmer Resident",
           district: isCurrentUser && localProfile?.district ? localProfile.district : "Coimbatore",
           crop: isCurrentUser && localProfile?.primaryCrop ? localProfile.primaryCrop : "Turmeric",
@@ -124,7 +124,7 @@ function StandaloneAdminPortal() {
       if (username === "admin" && password === "admin@12345") {
         sessionStorage.setItem("admin_session", "active");
         setIsAuthenticated(true);
-        toast.success("Welcome back to AgriVerse Admin Console!");
+        toast.success("Welcome back to Agri Agent Admin Console!");
       } else {
         toast.error("Invalid administrator credentials");
       }
@@ -208,9 +208,9 @@ function StandaloneAdminPortal() {
           <div className="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-emerald-500 to-green-600" />
           <CardHeader className="text-center pb-2 pt-6">
             <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-green-950/40 text-green-400 border border-green-500/20 mb-3">
-              <img src="/logo.png" alt="AgriVerse Logo" className="h-8 w-8 object-contain" />
+              <img src="/logo.png" alt="Agri Agent Logo" className="h-8 w-8 object-contain" />
             </div>
-            <CardTitle className="text-2xl font-bold tracking-tight">AgriVerse Portal</CardTitle>
+            <CardTitle className="text-2xl font-bold tracking-tight">Agri Agent Portal</CardTitle>
             <CardDescription className="text-xs text-slate-400 mt-1">
               Admin & Coordinator Console Gate
             </CardDescription>
@@ -258,11 +258,11 @@ function StandaloneAdminPortal() {
         {/* Header */}
         <div className="flex items-center justify-between border-b border-slate-800/80 pb-4">
           <div className="flex items-center gap-3">
-            <img src="/logo.png" alt="AgriVerse Logo" className="h-8 w-8 object-contain" />
+            <img src="/logo.png" alt="Agri Agent Logo" className="h-8 w-8 object-contain" />
             <div>
               <h1 className="text-2xl font-extrabold flex items-center gap-2 tracking-tight text-white">
                 <ShieldCheck className="h-5 w-5 text-emerald-500" />
-                AgriVerse Admin Console
+                Agri Agent Admin Console
               </h1>
               <p className="text-xs text-slate-400 mt-0.5">
                 Secure administration node — logistics scheduling, crop audits, and advisory dispatch systems.

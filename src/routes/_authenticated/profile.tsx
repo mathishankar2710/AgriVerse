@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+﻿import { createFileRoute } from "@tanstack/react-router";
 import { useState, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -25,7 +25,7 @@ const translations: Record<string, Record<string, any>> = {
     status_verified: "Verified Profile Status",
     status_desc: "PM-KISAN status: Connected",
     card_details: "Profile Details",
-    card_details_desc: "Fill out your details to personalize AgriVerse recommendations.",
+    card_details_desc: "Fill out your details to personalize Agri Agent recommendations.",
     name_lbl: "Full Name",
     name_placeholder: "Enter full name",
     phone_lbl: "Phone Number",

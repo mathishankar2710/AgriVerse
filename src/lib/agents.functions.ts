@@ -1,4 +1,4 @@
-import { createServerFn } from "@tanstack/react-start";
+﻿import { createServerFn } from "@tanstack/react-start";
 import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
 
 const SYSTEM_PROMPTS: Record<string, string> = {
@@ -7,7 +7,7 @@ const SYSTEM_PROMPTS: Record<string, string> = {
   fertilizer: "You are a soil & fertilizer expert. Given crop type, soil type, and growth stage, recommend specific fertilizers (with NPK ratios or names), application rates and timing. Keep it concise and practical for a smallholder farmer.",
   pest: "You are a plant pathologist. Given a crop and described symptoms, identify the most likely pest(s) or disease(s), explain briefly, and recommend both organic and chemical treatment options with application guidance.",
   irrigation: "You are an irrigation expert. Given crop, soil, region, and season, provide a clear weekly watering schedule (frequency, approximate quantity, best time of day) and any tips (mulching, drip vs. flood). Keep it concise and practical.",
-  chatbot: "You are AgriVerse's AI Smart Farming Assistant. You help farmers optimize crops, identify diseases, calculate NPK ratios, and solve agricultural issues. Be highly encouraging and practical. Keep your responses neat, highly structured, and concise (use short bullet points and headings; avoid long paragraphs or essay-like text). IMPORTANT: When mentioning crop names, weeds, pests, or local terms, you MUST include the English name followed by the Tamil translation in parentheses (using Tamil script, e.g., Paddy (நெல்) or Turmeric (மஞ்சள்)). NEVER output Hindi names or Hindi script.",
+  chatbot: "You are Agri Agent's AI Smart Farming Assistant. You help farmers optimize crops, identify diseases, calculate NPK ratios, and solve agricultural issues. Be highly encouraging and practical. Keep your responses neat, highly structured, and concise (use short bullet points and headings; avoid long paragraphs or essay-like text). IMPORTANT: When mentioning crop names, weeds, pests, or local terms, you MUST include the English name followed by the Tamil translation in parentheses (using Tamil script, e.g., Paddy (நெல்) or Turmeric (மஞ்சள்)). NEVER output Hindi names or Hindi script.",
 };
 
 async function callGroq(system: string, user: string): Promise<string> {

@@ -1,4 +1,4 @@
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+﻿import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import {
   Outlet,
   Link,
@@ -74,10 +74,10 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "AgriVerse — Digital Agriculture Ecosystem" },
-      { name: "description", content: "AgriVerse — An advanced, complete digital agriculture ecosystem featuring smart dashboards, AI farming assistants, crop management, marketplace, logistics, finance assistance, and more." },
-      { property: "og:title", content: "AgriVerse — Digital Agriculture Ecosystem" },
-      { property: "og:description", content: "AgriVerse — An advanced, complete digital agriculture ecosystem featuring smart dashboards, AI farming assistants, crop management, marketplace, logistics, finance assistance, and more." },
+      { title: "Agri Agent — Digital Agriculture Ecosystem" },
+      { name: "description", content: "Agri Agent — An advanced, complete digital agriculture ecosystem featuring smart dashboards, AI farming assistants, crop management, marketplace, logistics, finance assistance, and more." },
+      { property: "og:title", content: "Agri Agent — Digital Agriculture Ecosystem" },
+      { property: "og:description", content: "Agri Agent — An advanced, complete digital agriculture ecosystem featuring smart dashboards, AI farming assistants, crop management, marketplace, logistics, finance assistance, and more." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],

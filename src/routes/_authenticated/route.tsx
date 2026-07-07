@@ -152,10 +152,10 @@ function AuthedLayout() {
       <aside className="hidden md:flex flex-col w-64 bg-white border-r border-green-100/60 sticky top-0 h-screen p-5 z-20 overflow-y-auto">
         <div className="flex items-center gap-2 px-2 py-4 mb-6 flex-shrink-0">
           <div className="bg-transparent text-green-700">
-            <img src="/logo.png" alt="AgriVerse Logo" className="h-7 w-7 object-contain" />
+            <img src="/logo.png" alt="Agri Agent Logo" className="h-7 w-7 object-contain" />
           </div>
           <span className="font-bold text-xl tracking-tight bg-gradient-to-r from-green-800 to-green-600 bg-clip-text text-transparent">
-            AgriVerse
+            Agri Agent
           </span>
         </div>
         
@@ -187,9 +187,9 @@ function AuthedLayout() {
         <header className="flex items-center justify-between md:justify-end px-4 py-3 md:px-8 md:py-4 bg-white md:bg-transparent border-b border-green-100/60 md:border-none sticky top-0 z-20">
           {/* Logo on Mobile (Left) */}
           <div className="flex items-center gap-2 md:hidden">
-            <img src="/logo.png" alt="AgriVerse Logo" className="h-5 w-5 object-contain" />
+            <img src="/logo.png" alt="Agri Agent Logo" className="h-5 w-5 object-contain" />
             <span className="font-bold text-lg tracking-tight bg-gradient-to-r from-green-800 to-green-600 bg-clip-text text-transparent">
-              AgriVerse
+              Agri Agent
             </span>
           </div>
 
@@ -207,7 +207,7 @@ function AuthedLayout() {
               <div className="absolute right-0 mt-2 w-56 rounded-2xl bg-white border border-green-100/60 shadow-xl py-2 z-50 animate-fade-in text-left">
                 <div className="px-4 py-2.5 border-b border-slate-50">
                   <p className="text-xs font-semibold text-slate-500">
-                    {language === "tamil" ? "அக்ரிவர்ஸ் விவசாயி" : "AgriVerse Farmer"}
+                    {language === "tamil" ? "அக்ரி ஏஜென்ட் விவசாயி" : "Agri Agent Farmer"}
                   </p>
                   <p className="text-xs text-muted-foreground truncate">{user?.email}</p>
                 </div>
@@ -289,7 +289,7 @@ function AuthedLayout() {
 
             <h3 className="text-base font-bold text-slate-800 flex items-center gap-2 mb-1">
               <Settings className="h-5 w-5 text-green-700" />
-              AgriVerse {t.settings}
+              Agri Agent {t.settings}
             </h3>
             <p className="text-xs text-muted-foreground mb-6">{t.settings_desc}</p>
 
